@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(JMockit.class)
 public class CodeUnderTestTest {
@@ -306,5 +307,19 @@ public class CodeUnderTestTest {
 
         int result = new Dependency().businessOperation();
         assertEquals(3, result);
+    }
+
+    /**
+     * 忽略静态代码块
+     */
+    @Test
+    public void ignoreStaticBlock(){
+        new MockUp<Dependency>() {
+            @Mock
+            void $clinit(){}
+        };
+
+        Dependency dependency = Dependency.getInstance();
+        assertNull(dependency);
     }
 }

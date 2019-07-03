@@ -5,7 +5,7 @@
  **/
 public class Dependency {
 
-    private static Dependency dependency = new Dependency(null, null);
+    private static Dependency dependency;
 
     public static Dependency getInstance() {
         return dependency;
@@ -21,6 +21,10 @@ public class Dependency {
 
     public Dependency() {
 
+    }
+
+    static {
+        dependency = new Dependency(null, null);
     }
 
 
