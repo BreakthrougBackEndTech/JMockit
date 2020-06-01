@@ -15,7 +15,40 @@
     14. Mock所有实现类
     15. 忽略静态代码块
 
+### org.mockito.Mockito + 反射
+```java
+    JdbcTemplate jdbcTemplateMock = Mockito.mock(JdbcTemplate.class);
+    
+    when(jdbcTemplateMock.queryForObject(anyString(),
+        new Object[]{planId, any(Timestamp.class), any(Timestamp.class)},
+        Integer.class)).thenThrow(QueryTimeoutException.class);
+    
+    Class<TaskInfoImpl> clazz = TaskInfoImpl.class;
+    Field field = clazz.getDeclaredField("jdbcTemplate");
+    field.setAccessible(true);
+    Object jdbcTemplate = field.get(taskInfoPersist);
+    field.set(taskInfoPersist, jdbcTemplateMock);
+    
+    field.set(taskInfoPersist, jdbcTemplate);
+    field.setAccessible(false);
+```
+      
+
  
+### sonar
+
+<maven.clover.license><![CDATA[RMRQoxHhkDgCUJahonvDlLNEMNUjlaWOihPkJPntDLIOle
+ mi2KkuptG>ZXmdlbDUg3ugjm2K9xyCWqRYLYeq8xfLIMgk
+ MQPNStmPooqqmPpOopOvuqmRooqMQmmqmqvwTWWtuRVtts
+ TUUQSXvxxSvTqVuPPNuxnMRNqnmnmUUnqnvurummmmmmUU
+ nqnvurummmmmmUUEFB91WJ95D5EJWE5KNFIBJWFPWWWUUn
+ mmmm]]></maven.clover.license>
+
+<plugin>
+ <groupId>com.atlassian.maven.plugins</groupId>
+ <artifactId>clover-maven-plugin</artifactId>
+<version>4.1.1</version>
+ </plugin>
  
  
  
